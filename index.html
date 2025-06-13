@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Monad Faucet</title>
+  <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+  <style>
+    body {
+      background: #0d1117;
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #fff;
+      margin: 0;
+    }
+    .card {
+      background: #161b22;
+      padding: 2rem;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 1rem;
+    }
+    button {
+      background: #3b82f6;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🪙 Monad Faucet</h2>
+    <input type="text" id="wallet" placeholder="0xYourWalletAddress" />
+    <div
+      class="h-captcha"
+      data-sitekey="141ca000-1690-4a88-b1ce-6d5622926180"
+      data-callback="onVerified"
+    ></div>
+    <br/>
+    <button id="claimBtn" disabled onclick="claim()">Claim Token</button>
+  </div>
+
+  <script>
+    let token = null;
+
+    function onVerified(t) {
+      token = t;
+      document.getElementById("claimBtn").disabled = false;
+    }
+
+    function claim() {
+      const wallet = document.getElementById("wallet").value.trim();
+      if (!wallet.startsWith("0x") || wallet.length < 42) {
+        alert("Masukkan alamat wallet yang valid.");
+        return;
+      }
+      if (!token) {
+        alert("Harap verifikasi captcha terlebih dahulu.");
+        return;
+      }
+
+      // Kirim ke backend di masa depan jika ada
+      // Sekarang langsung redirect saja ke Adsterra
+      window.location.href =
+        "https://platinumsnatchable.com/kp44zes3?key=2cb243edbea4ff49f0fc9371f1ebd091";
+    }
+  </script>
+</body>
+</html>

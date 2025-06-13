@@ -45,6 +45,9 @@
     button:hover {
       background: #2563eb;
     }
+    .ad-container {
+      margin-top: 1.5rem;
+    }
   </style>
 </head>
 <body>
@@ -58,6 +61,8 @@
     ></div>
     <br/>
     <button id="claimBtn" disabled onclick="claim()">Claim Token</button>
+
+    <div class="ad-container" id="ad-container"></div>
   </div>
 
   <script>
@@ -79,11 +84,31 @@
         return;
       }
 
-      // Kirim ke backend di masa depan jika ada
-      // Sekarang langsung redirect saja ke Adsterra
+      // Redirect ke Adsterra setelah validasi
       window.location.href =
         "https://platinumsnatchable.com/kp44zes3?key=2cb243edbea4ff49f0fc9371f1ebd091";
     }
+
+    // Masukkan iklan setelah halaman dimuat
+    window.onload = function () {
+      const script1 = document.createElement('script');
+      script1.type = 'text/javascript';
+      script1.innerHTML = `
+        atOptions = {
+          'key' : '2ea709dc5767c012ddd3d4da8c089743',
+          'format' : 'iframe',
+          'height' : 300,
+          'width' : 160,
+          'params' : {}
+        };
+      `;
+      const script2 = document.createElement('script');
+      script2.type = 'text/javascript';
+      script2.src = '//platinumsnatchable.com/2ea709dc5767c012ddd3d4da8c089743/invoke.js';
+
+      document.getElementById('ad-container').appendChild(script1);
+      document.getElementById('ad-container').appendChild(script2);
+    };
   </script>
 </body>
 </html>

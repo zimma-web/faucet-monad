@@ -1,47 +1,89 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-gray-900 text-white">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Monad Faucet</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+  <style>
+    body {
+      background: #0d1117;
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #fff;
+      margin: 0;
+    }
+    .card {
+      background: #161b22;
+      padding: 2rem;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 1rem;
+    }
+    button {
+      background: #3b82f6;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+  </style>
 </head>
-<body class="flex items-center justify-center min-h-screen">
-  <div class="bg-gray-800 p-6 rounded-2xl shadow-lg max-w-sm w-full">
-    <h1 class="text-2xl font-bold mb-4 text-center">🚰 Monad Faucet</h1>
-    <form id="faucet-form" class="space-y-4">
-      <input type="text" id="wallet" name="wallet" placeholder="Monad Wallet Address" class="w-full px-4 py-2 rounded bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-      
-      <div class="h-captcha" data-sitekey="141ca000-1690-4a88-b1ce-6d5622926180"></div>
-
-      <button type="submit" class="w-full py-2 bg-blue-600 rounded hover:bg-blue-700 transition">Claim Token</button>
-    </form>
-    <p id="message" class="mt-4 text-center text-sm"></p>
-
-    <!-- Adsterra Code Here -->
-    <div class="mt-6">
-      <!-- Example ad container -->
-      <script type='text/javascript' src='https://www.gstatic.com/adsense/start.js'></script>
-    </div>
+<body>
+  <div class="card">
+    <h2>🪙 Monad Faucet</h2>
+    <input type="text" id="wallet" placeholder="0xYourWalletAddress" />
+    <div
+      class="h-captcha"
+      data-sitekey="141ca000-1690-4a88-b1ce-6d5622926180"
+      data-callback="onVerified"
+    ></div>
+    <br/>
+    <button id="claimBtn" disabled onclick="claim()">Claim Token</button>
   </div>
 
   <script>
-    document.getElementById("faucet-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const wallet = document.getElementById("wallet").value;
-      const token = document.querySelector('[name="h-captcha-response"]').value;
+    let token = null;
 
-      const res = await fetch("/claim", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ wallet, token }),
-      });
+    function onVerified(t) {
+      token = t;
+      document.getElementById("claimBtn").disabled = false;
+    }
 
-      const data = await res.json();
-      document.getElementById("message").innerText = data.message;
-      window.location.href = "https://platinumsnatchable.com/kp44zes3?key=2cb243edbea4ff49f0fc9371f1ebd091";
-    });
+    function claim() {
+      const wallet = document.getElementById("wallet").value.trim();
+      if (!wallet.startsWith("0x") || wallet.length < 42) {
+        alert("Masukkan alamat wallet yang valid.");
+        return;
+      }
+      if (!token) {
+        alert("Harap verifikasi captcha terlebih dahulu.");
+        return;
+      }
+
+      // Kirim ke backend di masa depan jika ada
+      // Sekarang langsung redirect saja ke Adsterra
+      window.location.href =
+        "https://platinumsnatchable.com/kp44zes3?key=2cb243edbea4ff49f0fc9371f1ebd091";
+    }
   </script>
 </body>
 </html>
